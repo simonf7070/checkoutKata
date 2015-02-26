@@ -1,0 +1,7 @@
+c:\users\simon.felix\documents\visual studio 2012\Projects\CheckoutKata\CheckoutKata\bin\Debug\CheckoutKata.dll
+c:\users\simon.felix\documents\visual studio 2012\Projects\CheckoutKata\CheckoutKata\bin\Debug\CheckoutKata.pdb
+c:\users\simon.felix\documents\visual studio 2012\Projects\CheckoutKata\CheckoutKata\bin\Debug\nunit.framework.dll
+c:\users\simon.felix\documents\visual studio 2012\Projects\CheckoutKata\CheckoutKata\bin\Debug\nunit.framework.xml
+c:\users\simon.felix\documents\visual studio 2012\Projects\CheckoutKata\CheckoutKata\obj\Debug\CheckoutKata.csprojResolveAssemblyReference.cache
+c:\users\simon.felix\documents\visual studio 2012\Projects\CheckoutKata\CheckoutKata\obj\Debug\CheckoutKata.dll
+c:\users\simon.felix\documents\visual studio 2012\Projects\CheckoutKata\CheckoutKata\obj\Debug\CheckoutKata.pdb
