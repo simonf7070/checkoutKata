@@ -93,7 +93,20 @@ namespace CheckoutKata.CheckoutKataSecond
 
         private static Checkout CreateCheckout()
         {
-            return new Checkout(new ItemPrice("A", 50), new ItemPrice("B", 30), new ItemPrice("C", 20));
+            return new Checkout(new PriceList(new[]
+            {
+                new ItemPrice("A", 50),
+                new ItemPrice("B", 30),
+                new ItemPrice("C", 20)
+            }), new DiscountList(SetupDiscounts()));
+        }
+
+        internal static Dictionary<string, Discount> SetupDiscounts()
+        {
+            var discountDictionary = new Dictionary<string, Discount>();
+            discountDictionary.Add("A", new Discount("A", 3, 20));
+            discountDictionary.Add("B", new Discount("B", 2, 15));
+            return discountDictionary;
         }
     }
 
@@ -124,7 +137,7 @@ namespace CheckoutKata.CheckoutKataSecond
         }
     }
 
-    internal class DiscountList : IEnumerable<KeyValuePair<string, Discount>>
+    public class DiscountList : IEnumerable<KeyValuePair<string, Discount>>
     {
         private readonly Dictionary<string, Discount> _inner;
 
@@ -154,11 +167,11 @@ namespace CheckoutKata.CheckoutKataSecond
         private readonly List<string> _itemsScannedList;
         private readonly DiscountList _discountList;
 
-        public Checkout(params ItemPrice[] itemPrice)
+        public Checkout(PriceList priceList, DiscountList discountList)
         {
-            _priceList = new PriceList(itemPrice);
+            _priceList = priceList;
             _itemsScannedList = new List<string>();
-            _discountList = new DiscountList(SetupDiscounts());
+            _discountList = discountList;
         }
 
         public int Total()
@@ -171,14 +184,6 @@ namespace CheckoutKata.CheckoutKataSecond
             return _subTotal;
         }
 
-        private static Dictionary<string, Discount> SetupDiscounts()
-        {
-            var discountDictionary = new Dictionary<string, Discount>();
-            discountDictionary.Add("A", new Discount(3, 20));
-            discountDictionary.Add("B", new Discount(2, 15));
-            return discountDictionary;
-        }
-
         public void Scan(string item)
         {
             _itemsScannedList.Add(item);
@@ -186,21 +191,24 @@ namespace CheckoutKata.CheckoutKataSecond
         }
     }
 
-    internal class Discount
+    public class Discount
     {
-        public int DiscountQuantity { get; private set; }
-        public int DiscountAmount { get; private set; }
-
-        public Discount(int discountQuantity, int discountAmount)
+        public readonly string Code;
+        private readonly int _quantity;
+        private readonly int _amount;
+        
+        public Discount(string code, int quantity, int amount)
         {
-            DiscountQuantity = discountQuantity;
-            DiscountAmount = discountAmount;
+            Code = code;
+            _quantity = quantity;
+            _amount = amount;
         }
-           
+
         internal int DiscountToApply(int itemCount)
         {
-            int discountsToApply = itemCount/this.DiscountQuantity;
-            return discountsToApply * this.DiscountAmount;
+            int discountsToApply = itemCount/_quantity;
+            return discountsToApply * _amount;
         }
+
     }
 }
